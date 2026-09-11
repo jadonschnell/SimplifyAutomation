@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Restoration Owner's Week Audit — Jadon / Restoration Systems</title>
-<meta name="description" content="Ninety minutes mapping where your week actually goes, then the systems that take the worst of it off your plate. For owners of restoration companies. You keep the map either way.">
+<title>The Restoration Owner's Week Audit | Jadon / Restoration Systems</title>
+<meta name="description" content="A free 60 minute call for owners of restoration companies. We map where your week goes and find the hours you are losing.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://example.com/">
 
 <!-- Open Graph / social. TODO: replace URLs with the live domain before launch. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Restoration Owner's Week Audit">
-<meta property="og:description" content="Ninety minutes mapping where your week actually goes. Most owners get back 10+ hours in the first month.">
+<meta property="og:description" content="A free 60 minute call for restoration company owners. Most owners get back 10 or more hours in the first month.">
 <meta property="og:url" content="https://example.com/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23201e1d'/%3E%3Crect x='6' y='14' width='20' height='4' fill='%23ec3013'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23201e1d'/%3E%3Crect x='6' y='14' width='20' height='4' fill='%23b31b1b'/%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,35 +25,30 @@
 
 <style>
 /* ══════════════════════════════════════════════════════════════════════════
-   Modernist — design-system tokens. Source of truth for the look.
+   Modernist - design-system tokens. Source of truth for the look.
    ══════════════════════════════════════════════════════════════════════ */
 :root {
   --color-bg: #f3f2f2;
   --color-surface: #eae9e9;
   --color-text: #201e1d;
-  --color-accent: #ec3013;
-  --color-accent-2: #e15b47;
+  --color-accent: #b31b1b;
   --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
 
   --color-neutral-100: #f8f4f4;
   --color-neutral-200: #eae7e7;
   --color-neutral-300: #d7d3d3;
-  --color-neutral-400: #bab6b6;
-  --color-neutral-500: #9b9797;
-  --color-neutral-600: #7d7979;
   --color-neutral-700: #605d5d;
   --color-neutral-800: #444141;
   --color-neutral-900: #2d2b2b;
 
-  --color-accent-100: #fff2ef;
-  --color-accent-200: #ffe0d9;
-  --color-accent-300: #ffc4b8;
-  --color-accent-400: #ff9783;
-  --color-accent-500: #ff563c;
-  --color-accent-600: #dd2b0f;
-  --color-accent-700: #ae1800;
-  --color-accent-800: #7c1405;
-  --color-accent-900: #4d170e;
+  /* Two darker steps of the accent, scaled in linear RGB so the hue holds
+     exactly. 600 is the button hover, 700 the active state and the colour
+     the small uppercase kickers are set in.
+       accent      6.08:1 against --color-bg
+       accent-600  6.85:1
+       accent-700  7.78:1   (WCAG AA needs 4.5:1) */
+  --color-accent-600: #a51818;
+  --color-accent-700: #961515;
 
   --font-heading: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-heading-weight: 800;
@@ -137,7 +132,7 @@ strong { font-weight: 800; }
 .shell { max-width: var(--shell); margin: 0 auto; padding-inline: var(--gutter); }
 .rule { border-bottom: 2px solid var(--color-divider); }
 
-/* — skip link — */
+/* - skip link - */
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 100;
   background: var(--color-text); color: var(--color-bg);
@@ -146,7 +141,7 @@ strong { font-weight: 800; }
 }
 .skip-link:focus { left: 8px; top: 8px; color: var(--color-bg); }
 
-/* — buttons — */
+/* - buttons - */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   cursor: pointer; text-decoration: none;
@@ -178,7 +173,7 @@ strong { font-weight: 800; }
 .btn-submit:hover { background: var(--color-neutral-900); color: var(--color-bg); }
 .btn-sticky { padding: 12px 16px; justify-content: flex-start; gap: 8px; white-space: nowrap; }
 
-/* — forms — */
+/* - forms - */
 .input {
   width: 100%; min-height: 36px; padding: 6px 10px; font: inherit;
   font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
@@ -188,21 +183,11 @@ strong { font-weight: 800; }
 .input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
 .input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
 
-/* — tables — */
-.table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.table th {
-  text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-text) 60%, transparent);
-  padding: var(--space-2); border-bottom: 2px solid var(--color-divider);
-}
-.table td { padding: var(--space-2); border-bottom: 1px solid var(--color-divider); }
-.table tbody tr:hover { background: color-mix(in srgb, var(--color-text) 4%, transparent); }
-
 /* ══════════════════════════════════════════════════════════════════════════
    Page sections
    ══════════════════════════════════════════════════════════════════════ */
 
-/* — header — */
+/* - header - */
 .site-header .shell {
   padding-block: 14px;
   display: flex; flex-wrap: wrap; gap: 12px 24px;
@@ -234,7 +219,7 @@ strong { font-weight: 800; }
 }
 .fact-title { font-size: 16px; }
 
-/* — section headings (numbered) — */
+/* - section headings (numbered) - */
 .sec-head {
   display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline;
   margin-bottom: clamp(24px, 3vw, 40px);
@@ -246,7 +231,7 @@ strong { font-weight: 800; }
 .sec-title { font-size: clamp(26px, 3.6vw, 44px); letter-spacing: -0.025em; margin: 0; }
 .sec-title-sm { font-size: clamp(26px, 3.6vw, 40px); }
 
-/* — hero — */
+/* - hero - */
 .hero .shell { padding-block: clamp(40px, 6vw, 88px) clamp(36px, 5vw, 72px); }
 .eyebrow {
   font-size: 12px; font-family: var(--font-heading); font-weight: 800;
@@ -264,7 +249,7 @@ strong { font-weight: 800; }
 .hero-lede { font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; max-width: 46ch; margin: 0; }
 .hero-cta-note { font-size: 13px; margin: 10px 0 0; color: var(--color-neutral-700); max-width: 340px; }
 
-/* — four-up fact grid, used in hero and the offer section — */
+/* - four-up fact grid, used in hero and the offer section - */
 .facts {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(215px, 100%), 1fr));
   gap: clamp(20px, 3vw, 36px);
@@ -277,7 +262,7 @@ strong { font-weight: 800; }
 .fact p { font-size: 15px; line-height: 1.45; margin: 0; }
 .fact--offer p { color: var(--color-neutral-800); }
 
-/* — the week — */
+/* - the week - */
 .week-cols {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 0 clamp(32px, 5vw, 72px);
@@ -299,7 +284,7 @@ strong { font-weight: 800; }
 }
 .week-summary p + p { font-size: 15px; margin: 12px 0 0; color: var(--color-neutral-800); max-width: 42ch; }
 
-/* — contrast pair (section 02) — */
+/* - contrast pair (section 02) - */
 .pair {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
   gap: clamp(24px, 4vw, 56px);
@@ -311,7 +296,7 @@ strong { font-weight: 800; }
 .pair p { font-size: 16px; line-height: 1.5; margin: 0 0 12px; }
 .pair p:last-child { margin: 0; color: var(--color-neutral-800); }
 
-/* — offer (section 03) — */
+/* - offer (section 03) - */
 .offer-cols {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: clamp(28px, 4vw, 64px); align-items: start;
@@ -326,7 +311,7 @@ strong { font-weight: 800; }
   line-height: 1.2; letter-spacing: -0.02em; margin: 0;
 }
 
-/* — sample map (section 04) — */
+/* - sample map (section 04) - */
 .split {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: clamp(28px, 4vw, 56px); align-items: start;
@@ -335,7 +320,7 @@ strong { font-weight: 800; }
 .frame { border: 2px solid var(--color-divider); }
 
 /* Placeholder for artwork that isn't supplied yet. Swap the whole
-   .placeholder element for an <img> — see the comments in the markup. */
+   .placeholder element for an <img> - see the comments in the markup. */
 .placeholder {
   display: flex; align-items: center; justify-content: center; text-align: center;
   aspect-ratio: 4 / 3; padding: var(--space-6);
@@ -349,7 +334,7 @@ strong { font-weight: 800; }
 }
 .placeholder--portrait { aspect-ratio: 4 / 5; }
 
-/* — steps (section 05) — */
+/* - steps (section 05) - */
 .steps {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: clamp(20px, 3vw, 40px);
@@ -367,11 +352,12 @@ strong { font-weight: 800; }
 .step p { font-size: 15px; margin: 0 0 12px; }
 .step-price { font-family: var(--font-heading); font-weight: 800; font-size: 15px; margin: 0 !important; }
 
-/* — pricing (section 06) — */
-.pricing-lede { font-size: 16px; max-width: 52ch; margin: 0 0 clamp(20px, 3vw, 32px); }
-.table-wrap { overflow-x: auto; }
+/* - pricing (section 06) - */
+.pricing-lede { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; max-width: 46ch; margin: 0 0 20px; }
+.pricing-body { font-size: 16px; line-height: 1.5; max-width: 60ch; margin: 0 0 14px; }
+.pricing-body:last-child { margin-bottom: 0; color: var(--color-neutral-800); }
 
-/* — proof (section 07) — */
+/* - proof (section 07) - */
 .proof {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: clamp(24px, 4vw, 48px);
@@ -382,7 +368,7 @@ strong { font-weight: 800; }
 .proof p:last-child { margin: 0; }
 .proof-note { font-size: 13px !important; color: var(--color-neutral-700); }
 
-/* — about (section 08) — */
+/* - about (section 08) - */
 .about .shell {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: clamp(28px, 4vw, 56px); align-items: start;
@@ -391,7 +377,7 @@ strong { font-weight: 800; }
 .about p { font-size: 16px; line-height: 1.55; margin: 0 0 14px; max-width: 46ch; }
 .about p:last-child { margin: 0; }
 
-/* — FAQ (section 09) — */
+/* - FAQ (section 09) - */
 .faq { border-top: 2px solid var(--color-divider); max-width: 860px; }
 .faq details { border-bottom: 1px solid var(--color-neutral-300); padding: 18px 0; }
 .faq summary {
@@ -407,7 +393,7 @@ strong { font-weight: 800; }
 .faq details[open] .plus { transform: rotate(45deg); }
 .faq details p { font-size: 16px; line-height: 1.55; margin: 12px 0 0; max-width: 62ch; }
 
-/* — booking (CTA section) — */
+/* - booking (CTA section) - */
 .book { background: var(--color-accent); color: var(--color-bg); }
 .book .shell { padding-block: clamp(48px, 7vw, 108px); }
 .book-cols {
@@ -447,7 +433,7 @@ strong { font-weight: 800; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 [hidden] { display: none !important; }
 
-/* — footer — */
+/* - footer - */
 .site-footer { border-top: 2px solid var(--color-divider); }
 .site-footer .shell {
   padding-block: 20px;
@@ -456,7 +442,7 @@ strong { font-weight: 800; }
   color: var(--color-neutral-700);
 }
 
-/* — sticky CTA bar — */
+/* - sticky CTA bar - */
 .sticky-cta {
   position: sticky; bottom: 0;
   background: var(--color-text); color: var(--color-bg);
@@ -513,30 +499,30 @@ strong { font-weight: 800; }
       <p class="eyebrow">For owners of restoration companies</p>
       <h1>You didn't start a restoration company to spend Sunday night writing estimates.</h1>
       <div class="hero-cols">
-        <p class="hero-lede">I spend 90 minutes mapping where your week actually goes — then build the systems that take the worst of it off your plate. Most owners get back 10+ hours in the first month.</p>
+        <p class="hero-lede">I spend 60 minutes mapping where your week actually goes. Then I build the systems that take the worst of it off your plate. Most owners get back 10 or more hours in the first month.</p>
         <div>
           <a class="btn btn-primary btn-hero" href="#book">Book your Week Audit
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
-          <p class="hero-cta-note">90 minutes. No pitch. You keep the map either way.</p>
+          <p class="hero-cta-note">Free. 60 minutes. No pitch.</p>
         </div>
       </div>
       <div class="facts facts--hero">
         <div class="fact">
           <h2 class="kicker">Who this is for</h2>
-          <p>Owners of restoration companies — water, fire, mold — still doing the work only they can do.</p>
+          <p>Owners of restoration companies. Water, fire, mold. The ones still doing the work only they can do.</p>
         </div>
         <div class="fact">
           <h2 class="kicker">The problem</h2>
-          <p>Sixty-hour weeks lost to estimates, adjuster chase-down, job documentation and 2am calls.</p>
+          <p>Sixty hour weeks lost to estimates, chasing adjusters, job documentation, and 2am calls.</p>
         </div>
         <div class="fact">
           <h2 class="kicker">The outcome</h2>
-          <p>10+ hours a week back in the first month, without a new platform to manage.</p>
+          <p>Ten or more hours a week back in the first month. No new platform to manage.</p>
         </div>
         <div class="fact">
           <h2 class="kicker">What to do next</h2>
-          <p>Book the 90-minute Week Audit. You keep the written map whether you hire me or not.</p>
+          <p>Book the free 60 minute Week Audit. No cost, no pitch, no commitment.</p>
         </div>
       </div>
     </div>
@@ -600,9 +586,9 @@ strong { font-weight: 800; }
       </div>
       <div class="offer-cols">
         <div>
-          <p class="offer-lede">Ninety minutes on a call. We walk your week hour by hour. You leave with a written map of where your time goes and the three biggest leaks in it.</p>
-          <p class="offer-keep"><strong>Yours to keep whether you hire me or not.</strong></p>
-          <p class="offer-price">$500 — waived for restoration owners through <span data-waive-month>October</span>.</p>
+          <p class="offer-lede">Sixty minutes on a call. We walk your week hour by hour and build a map of where your time goes. By the end you will know what the three biggest leaks are.</p>
+          <p class="offer-keep"><strong>The call is free and there is nothing to buy on it.</strong></p>
+          <p class="offer-price">If I can help after that, I will tell you what the work involves. If I cannot help, I will say so.</p>
         </div>
         <div class="guarantee">
           <h3 class="kicker">The guarantee</h3>
@@ -612,11 +598,11 @@ strong { font-weight: 800; }
       <div class="facts facts--offer">
         <div class="fact fact--offer">
           <h3 class="fact-title">You'll see where the week actually goes</h3>
-          <p>Most owners guess wrong. The map is worth the 90 minutes on its own.</p>
+          <p>Most owners guess wrong. Seeing the real numbers is worth the hour by itself.</p>
         </div>
         <div class="fact fact--offer">
           <h3 class="fact-title">The worst three hours disappear first</h3>
-          <p>Not a full rebuild. We take the top leaks and kill them.</p>
+          <p>This is not a full rebuild. We take the biggest leaks and close them.</p>
         </div>
         <div class="fact fact--offer">
           <h3 class="fact-title">You don't manage another piece of software</h3>
@@ -638,14 +624,14 @@ strong { font-weight: 800; }
           <span class="sec-num">04</span>
           <h2 class="sec-title sec-title-sm" id="s04">What the map looks like</h2>
         </div>
-        <p class="split-lede">One page per owner. Every hour accounted for, the leaks marked, and the three I'd close first. This is the deliverable — not a proposal.</p>
+        <p class="split-lede">One page for your week. Every hour accounted for, the leaks marked, and the three I would close first. We build it on the call and walk through it line by line.</p>
       </div>
       <figure class="grayscale">
         <div class="frame">
-          <!-- PLACEHOLDER — replace the div below with:
+          <!-- PLACEHOLDER: replace the div below with:
                <img src="assets/week-audit-map-sample.png" width="1200" height="900" loading="lazy" decoding="async"
                     alt="An anonymized Week Audit map: every hour of one owner's week, with the three biggest time leaks marked."> -->
-          <div class="placeholder">Placeholder — anonymized<br>Week Audit map sample</div>
+          <div class="placeholder">Placeholder: anonymized<br>Week Audit map sample</div>
         </div>
         <figcaption>Sample map, details anonymized.</figcaption>
       </figure>
@@ -661,19 +647,19 @@ strong { font-weight: 800; }
       </div>
       <div class="steps">
         <div class="step">
-          <div class="step-head"><h3 class="kicker">Step 1 — The Audit</h3><span class="step-when">90 min</span></div>
-          <p>We walk your week hour by hour. You get the written map and the three biggest leaks.</p>
-          <p class="step-price">$500 — waived through <span data-waive-month>October</span></p>
+          <div class="step-head"><h3 class="kicker">Step 1: The Audit</h3><span class="step-when">60 min</span></div>
+          <p>We walk your week hour by hour and find the three biggest leaks in it.</p>
+          <p class="step-price">Free</p>
         </div>
         <div class="step">
-          <div class="step-head"><h3 class="kicker">Step 2 — The Build</h3><span class="step-when">14 days</span></div>
+          <div class="step-head"><h3 class="kicker">Step 2: The Build</h3><span class="step-when">14 days</span></div>
           <p>I build the systems for the top leaks. You approve, I install, nothing for you to learn.</p>
-          <p class="step-price">$2,000 project fee</p>
+          <p class="step-price">Quoted after the audit</p>
         </div>
         <div class="step">
-          <div class="step-head"><h3 class="kicker">Step 3 — Support</h3><span class="step-when">Ongoing</span></div>
+          <div class="step-head"><h3 class="kicker">Step 3: Support</h3><span class="step-when">Ongoing</span></div>
           <p>I maintain it, adjust it, add to it as the business changes.</p>
-          <p class="step-price">$500/month, cancel anytime</p>
+          <p class="step-price">Monthly. Cancel anytime.</p>
         </div>
       </div>
     </div>
@@ -686,19 +672,9 @@ strong { font-weight: 800; }
         <span class="sec-num">06</span>
         <h2 class="sec-title" id="s06">What it costs</h2>
       </div>
-      <p class="pricing-lede">Published, so you know before the call. No package tiers, no annual contract.</p>
-      <div class="table-wrap">
-        <table class="table">
-          <thead>
-            <tr><th scope="col">Item</th><th scope="col">When</th><th scope="col">Price</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Week Audit</td><td>90 minutes</td><td>$500, waived through <span data-waive-month>October</span></td></tr>
-            <tr><td>The Build</td><td>14 days</td><td>$2,000 one-time</td></tr>
-            <tr><td>Support</td><td>Monthly</td><td>$500, cancel anytime</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <p class="pricing-lede">The Week Audit is free. Sixty minutes, no pitch, nothing to buy at the end of it.</p>
+      <p class="pricing-body">What comes after the audit depends on what we find. A build for one owner looks nothing like a build for another, so I do not publish a number here that I would only have to walk back. Once I have seen your week I will tell you what the work involves and what it costs, and you decide from there.</p>
+      <p class="pricing-body">No package tiers. No annual contract. Nothing starts until you say so.</p>
     </div>
   </section>
 
@@ -713,12 +689,12 @@ strong { font-weight: 800; }
         <div>
           <h3 class="kicker">A client, named</h3>
           <!-- Real client name from the approved design. Confirm permission is on file before launch. -->
-          <p>Anissa Branch — what we built and what it gave back. Ask me for the numbers on the call and I'll walk you through them.</p>
+          <p>Anissa Branch. Ask me on the call what we built for her and what it gave back, and I will walk you through the numbers.</p>
           <p class="proof-note">Used with permission.</p>
         </div>
         <div>
           <h3 class="kicker">One system I built</h3>
-          <p>A phone agent that takes after-hours loss calls, gets the address and the cause of loss, and texts the on-call tech. Evidence I build things — not the thing I'm selling you.</p>
+          <p>A phone agent that takes after hours loss calls, gets the address and the cause of loss, and texts the on-call tech. It shows that I build things. It is not the thing I am selling you.</p>
         </div>
         <div>
           <h3 class="kicker">What you won't find here</h3>
@@ -736,15 +712,15 @@ strong { font-weight: 800; }
           <span class="sec-num">08</span>
           <h2 class="sec-title sec-title-sm" id="s08">Who I am</h2>
         </div>
-        <p class="about-lede">I'm Jadon. I build operating systems for restoration companies — one owner at a time, nationwide, from Colorado.</p>
+        <p class="about-lede">I am Jadon. I build operating systems for restoration companies, one owner at a time, nationwide, from Colorado.</p>
         <p>I'm not a software company and I'm not an agency. There's no team behind me and no offshore support desk. You talk to me, and I do the work.</p>
         <p>I'd rather tell you no on the audit call than sell you the wrong thing.</p>
       </div>
       <div class="grayscale frame">
-        <!-- PLACEHOLDER — replace the div below with:
+        <!-- PLACEHOLDER: replace the div below with:
              <img src="assets/jadon.jpg" width="900" height="1125" loading="lazy" decoding="async"
                   alt="Jadon, who runs Restoration Systems."> -->
-        <div class="placeholder placeholder--portrait">Placeholder — photo of<br>Jadon (real, not stock)</div>
+        <div class="placeholder placeholder--portrait">Placeholder: photo of<br>Jadon (real, not stock)</div>
       </div>
     </div>
   </section>
@@ -759,15 +735,15 @@ strong { font-weight: 800; }
       <div class="faq">
         <details>
           <summary>Is this a sales call dressed up as a free audit?<span class="plus" aria-hidden="true">+</span></summary>
-          <p>No. The audit has a price — $500 — and it's waived through <span data-waive-month>October</span> for restoration owners. You keep the map either way, and if it doesn't surface 10 hours a week you're losing, I pay you $100.</p>
+          <p>The call is free and there is nothing to buy on it. We spend 60 minutes on your week. If it does not turn up at least 10 hours a week you are losing, I will pay you $100 for the time I wasted.</p>
         </details>
         <details>
           <summary>I've bought software before and nobody used it.<span class="plus" aria-hidden="true">+</span></summary>
           <p>Then you already know the problem. I'm not handing you a platform and a login. I build the system, I run it, and if it needs changing I change it. Nobody on your crew has to learn anything.</p>
         </details>
         <details>
-          <summary>I don't have 90 minutes.<span class="plus" aria-hidden="true">+</span></summary>
-          <p>Ninety minutes once, to find 10 hours a week. That's the arithmetic. If it doesn't work out that way, you keep the map and I owe you $100.</p>
+          <summary>I do not have 60 minutes.<span class="plus" aria-hidden="true">+</span></summary>
+          <p>One hour, one time, to find 10 hours a week. That is the math. If it does not work out that way, I owe you $100.</p>
         </details>
         <details>
           <summary>What if my problem isn't something you can fix?<span class="plus" aria-hidden="true">+</span></summary>
@@ -775,7 +751,7 @@ strong { font-weight: 800; }
         </details>
         <details>
           <summary>Who else have you done this for?<span class="plus" aria-hidden="true">+</span></summary>
-          <p>A short list, and I'll name them on the call rather than dress it up here. I'm early. That's why the audit is waived and why the guarantee is what it is — the risk sits on my side, not yours.</p>
+          <p>A short list. I will name them on the call instead of dressing it up here. I am early, and that is why the call is free and the guarantee is what it is. The risk sits on my side, not yours.</p>
         </details>
       </div>
     </div>
@@ -787,7 +763,7 @@ strong { font-weight: 800; }
       <div class="book-cols">
         <div>
           <h2 id="book-title">Let's find out where your week goes.</h2>
-          <p class="book-lede">Ninety minutes on a call. You keep the written map either way, and if it doesn't surface 10 hours a week you're losing, I'll pay you $100.</p>
+          <p class="book-lede">Sixty minutes on a call, free. If it does not turn up at least 10 hours a week you are losing, I will pay you $100.</p>
           <p class="book-note">Leave your details and I'll send two times that work. Nothing else happens.</p>
         </div>
 
@@ -807,13 +783,13 @@ strong { font-weight: 800; }
             <button class="btn btn-submit" type="submit">Book your Week Audit
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </button>
-            <p class="form-fineprint">90 minutes. No pitch. You keep the map either way.</p>
+            <p class="form-fineprint">Free. 60 minutes. No pitch.</p>
             <p class="form-error" id="form-error" role="alert" hidden></p>
           </form>
 
           <div class="book-sent" id="book-sent" hidden tabindex="-1">
             <h3>Got it. I'll text you two times today.</h3>
-            <p>Ninety minutes, no pitch, and the map is yours either way.</p>
+            <p>Sixty minutes, free, and no pitch.</p>
           </div>
         </div>
       </div>
@@ -831,7 +807,7 @@ strong { font-weight: 800; }
 
 <aside class="sticky-cta" aria-label="Book a Week Audit">
   <div class="shell">
-    <span>90 minutes. No pitch. You keep the map.</span>
+    <span>Free. 60 minutes. No pitch.</span>
     <a class="btn btn-primary btn-sticky" href="#book">Book your Week Audit
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
     </a>
@@ -840,28 +816,21 @@ strong { font-weight: 800; }
 
 <script>
 /* ══════════════════════════════════════════════════════════════════════════
-   CONFIG — the only block you need to edit before launch.
+   CONFIG - the only block you need to edit before launch.
    ══════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
   // Where booking requests are POSTed as JSON. Any form backend works
   // (Formspree, Basin, Netlify Functions, your own endpoint).
-  // REQUIRED before launch — while this is empty the form shows a fallback.
+  // REQUIRED before launch - while this is empty the form shows a fallback.
   formEndpoint: "",
 
   // Fallback so a lead is never lost if the endpoint is missing or down.
   // REQUIRED before launch.
-  contactEmail: "you@example.com",
-
-  // The month the $500 audit fee is waived through.
-  waiveMonth: "October"
+  contactEmail: "you@example.com"
 };
 
 (function () {
   "use strict";
-
-  // Keep every "$500 waived through …" mention in sync with CONFIG.
-  var months = document.querySelectorAll("[data-waive-month]");
-  for (var i = 0; i < months.length; i++) months[i].textContent = CONFIG.waiveMonth;
 
   var form = document.getElementById("book-form");
   var sent = document.getElementById("book-sent");
@@ -882,7 +851,7 @@ var CONFIG = {
       "Company: " + data.company + "\n" +
       "Phone: " + data.phone;
     return "mailto:" + CONFIG.contactEmail +
-      "?subject=" + encodeURIComponent("Week Audit request — " + data.company) +
+      "?subject=" + encodeURIComponent("Week Audit request: " + data.company) +
       "&body=" + encodeURIComponent(body);
   }
 
@@ -902,7 +871,7 @@ var CONFIG = {
       phone: form.phone.value.trim()
     };
 
-    // Honeypot tripped — pretend it worked, send nothing.
+    // Honeypot tripped - pretend it worked, send nothing.
     if (form.website.value) { succeed(); return; }
 
     if (!CONFIG.formEndpoint) {
