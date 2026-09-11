@@ -127,8 +127,6 @@ strong { font-weight: 800; }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
 ::selection { background: color-mix(in srgb, var(--color-accent) 30%, transparent); }
 
-.grayscale { filter: grayscale(1) contrast(1.08); }
-
 .shell { max-width: var(--shell); margin: 0 auto; padding-inline: var(--gutter); }
 .rule { border-bottom: 2px solid var(--color-divider); }
 
@@ -305,20 +303,6 @@ strong { font-weight: 800; }
 
 .frame { border: 2px solid var(--color-divider); }
 
-/* Placeholder for artwork that isn't supplied yet. Swap the whole
-   .placeholder element for an <img> - see the comments in the markup. */
-.placeholder {
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  aspect-ratio: 4 / 3; padding: var(--space-6);
-  background:
-    repeating-linear-gradient(135deg,
-      var(--color-neutral-200) 0 10px,
-      var(--color-neutral-100) 10px 20px);
-  color: var(--color-neutral-700);
-  font-family: var(--font-heading); font-weight: 800; font-size: 12px;
-  letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.6;
-}
-.placeholder--portrait { aspect-ratio: 4 / 5; }
 
 /* - steps (section 05) - */
 .steps {
@@ -679,15 +663,10 @@ strong { font-weight: 800; }
         <p>I'm not a software company and I'm not an agency. There's no team behind me and no offshore support desk. You talk to me, and I do the work.</p>
         <p>I work mostly with home service and restoration companies. But if you are a local business owner losing hours to repeat work, come talk to me.</p>
       </div>
-      <div class="grayscale frame">
-        <!-- Save the headshot as assets/jadon.jpg and it replaces the
-             placeholder on load. If the file is missing the placeholder stays,
-             so the page never shows a broken image. -->
-        <div class="placeholder placeholder--portrait">Photo of Jadon<br>goes here</div>
-        <img src="assets/jadon.jpg" alt="Jadon, who runs Simplify Automation."
+      <div class="frame">
+        <img src="assets/jadon-photo.jpg" width="1100" height="1100"
              loading="lazy" decoding="async"
-             onload="this.previousElementSibling.hidden = true;"
-             onerror="this.hidden = true;">
+             alt="Jadon, who runs Simplify Automation.">
       </div>
     </div>
   </section>
