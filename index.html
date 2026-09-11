@@ -714,7 +714,10 @@ strong { font-weight: 800; }
         </div>
 
         <div>
-          <form id="book-form" novalidate>
+          <form id="book-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="beb63cd3-a461-4859-85d5-216a87a10549">
+            <input type="hidden" name="subject" value="New Week Audit request from the website">
+            <input type="hidden" name="from_name" value="Simplify Automation">
             <label for="f-name">Your name
               <input class="input" id="f-name" name="name" type="text" required autocomplete="name" enterkeyhint="next">
             </label>
@@ -724,8 +727,13 @@ strong { font-weight: 800; }
             <label for="f-phone">Phone
               <input class="input" id="f-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" enterkeyhint="send">
             </label>
-            <!-- Honeypot: hidden from people, filled by most bots. -->
-            <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+            <!-- Honeypots: hidden from people. The text field catches bots that
+                 fill everything, botcheck is Web3Forms' own server-side check. -->
+            <div class="hp" aria-hidden="true">
+              <label for="f-website">Website</label>
+              <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+              <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+            </div>
             <button class="btn btn-submit" type="submit">Book your Week Audit
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" focusable="false"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </button>
@@ -765,14 +773,18 @@ strong { font-weight: 800; }
    CONFIG - the only block you need to edit before launch.
    ══════════════════════════════════════════════════════════════════════ */
 var CONFIG = {
-  // Where booking requests are POSTed as JSON. Any form backend works
-  // (Formspree, Basin, Netlify Functions, your own endpoint).
-  // REQUIRED before launch - while this is empty the form shows a fallback.
-  formEndpoint: "",
+  // Web3Forms delivers each submission to the inbox tied to the access key.
+  // The key is a public submission token, not a secret: it is meant to sit in
+  // client-side HTML. It is also in the form's hidden input, which is what
+  // makes the no-JavaScript path work.
+  formEndpoint: "https://api.web3forms.com/submit",
+  accessKey: "beb63cd3-a461-4859-85d5-216a87a10549",
 
-  // Fallback so a lead is never lost if the endpoint is missing or down.
-  // REQUIRED before launch.
-  contactEmail: "you@example.com"
+  // Optional. If set, a failed submission offers a mailto link pre-filled with
+  // the lead's details, so nothing is lost when the endpoint is unreachable.
+  // Leave empty to show a plain retry message instead. Note that an address
+  // here is visible in the page source and will be picked up by scrapers.
+  contactEmail: ""
 };
 
 (function () {
@@ -791,14 +803,20 @@ var CONFIG = {
     error.hidden = false;
   }
 
-  function mailtoFallback(data) {
+  // Offer a way through when the request fails, rather than losing the lead.
+  function failureMessage(data) {
+    if (!CONFIG.contactEmail) {
+      return "That didn\u2019t go through. Give it another try in a moment.";
+    }
     var body =
       "Name: " + data.name + "\n" +
       "Company: " + data.company + "\n" +
       "Phone: " + data.phone;
-    return "mailto:" + CONFIG.contactEmail +
+    var href = "mailto:" + CONFIG.contactEmail +
       "?subject=" + encodeURIComponent("Week Audit request: " + data.company) +
       "&body=" + encodeURIComponent(body);
+    return "That didn\u2019t go through. <a href=\"" + href +
+      "\">Email these details instead</a> and I\u2019ll reach out within an hour.";
   }
 
   form.addEventListener("submit", function (e) {
@@ -817,14 +835,8 @@ var CONFIG = {
       phone: form.phone.value.trim()
     };
 
-    // Honeypot tripped - pretend it worked, send nothing.
-    if (form.website.value) { succeed(); return; }
-
-    if (!CONFIG.formEndpoint) {
-      showError('Booking isn’t wired up yet. <a href="' + mailtoFallback(data) +
-        '">Email these details instead</a> and I’ll send two times today.');
-      return;
-    }
+    // Either honeypot tripped - pretend it worked, send nothing.
+    if (form.website.value || form.botcheck.checked) { succeed(); return; }
 
     button.disabled = true;
     button.childNodes[0].nodeValue = "Sending… ";
@@ -832,17 +844,26 @@ var CONFIG = {
     fetch(CONFIG.formEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        access_key: CONFIG.accessKey,
+        subject: "Week Audit request: " + data.company,
+        from_name: "Simplify Automation",
+        name: data.name,
+        company: data.company,
+        phone: data.phone
+      })
     })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        // Web3Forms answers 200 with { success: false } for a rejected
+        // submission, so the status code alone is not enough.
+        if (!json || json.success !== true) throw new Error(json && json.message);
         succeed();
       })
       .catch(function () {
         button.disabled = false;
         button.childNodes[0].nodeValue = buttonLabel;
-        showError('That didn’t go through. <a href="' + mailtoFallback(data) +
-          '">Email these details instead</a> and I’ll send two times today.');
+        showError(failureMessage(data));
       });
   });
 

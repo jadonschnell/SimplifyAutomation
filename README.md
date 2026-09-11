@@ -8,7 +8,7 @@ Netlify, Cloudflare Pages, Vercel, plain nginx) and it is live.
 ```
 index.html    the whole site
 robots.txt    crawler rules - see the sitemap note below
-assets/       put jadon.jpg here (see "Image still needed")
+assets/       jadon-photo.jpg, the headshot
 ```
 
 ## Positioning
@@ -39,44 +39,52 @@ lockup is now "Jadon - Simplify Automation".
 
 ## Before launch - required
 
-### 1. Wire up the booking form
+### 1. Booking form - done
 
-At the bottom of `index.html`, in the `CONFIG` block:
+The form posts to **Web3Forms**, which delivers each submission to the inbox
+tied to the access key. Nothing left to configure.
 
 ```js
 var CONFIG = {
-  formEndpoint: "",                // <- REQUIRED
-  contactEmail: "you@example.com"  // <- REQUIRED
+  formEndpoint: "https://api.web3forms.com/submit",
+  accessKey: "beb63cd3-a461-4859-85d5-216a87a10549",
+  contactEmail: ""
 };
 ```
 
-- **`formEndpoint`** - a URL that accepts a JSON `POST` of
-  `{ name, company, phone }`. Formspree, Basin, Netlify Forms, a Zapier or Make
-  webhook, or your own endpoint all work.
-- **`contactEmail`** - the fallback. If the endpoint is missing or errors, the
-  form shows a `mailto:` link pre-filled with the lead's details, so a
-  submission is never silently lost.
+The access key is a public submission token, not a secret. It is meant to sit in
+client-side HTML, and it is also a hidden input in the form itself.
 
-Until `formEndpoint` is set, **the form cannot deliver a lead.** It falls back to
-the email link rather than pretending to succeed.
+Three layers, so a lead is hard to lose:
+
+1. **With JavaScript** the submit handler POSTs JSON and shows the inline
+   success panel without leaving the page.
+2. **Without JavaScript** the form's own `action` and `method` post straight to
+   Web3Forms, which shows its default thank-you page. The browser validates the
+   required fields natively, since the form carries no `novalidate`.
+3. **If the request fails** the button re-enables and an error appears. Setting
+   `contactEmail` turns that error into a `mailto:` link pre-filled with the
+   lead's details; left empty it is a plain retry message. An address there is
+   visible in the page source and will be scraped, so it is opt-in.
+
+Two honeypots catch bots: a hidden text field, and Web3Forms' own `botcheck`.
+Both are inside an `aria-hidden` container with `tabindex="-1"`, so neither is
+reachable by keyboard or screen reader.
+
+Verified end to end against the live API: HTTP 200, `success: true`, with name,
+company and phone delivered and the subject set to the company name.
 
 ### 2. Real domain
 
 Replace `https://example.com/` in `index.html` (`<link rel="canonical">` and
 `og:url`) and in `robots.txt`.
 
-### 3. Image still needed
+### 3. Photo - done
 
-| Where | What | Status |
-| --- | --- | --- |
-| Section 07, *Who I am* | `assets/jadon.jpg` - a real photo, not stock | **Not supplied** |
-
-The markup is already wired. Save the file to that exact path and it replaces the
-placeholder on load. If the file is missing the placeholder stays put, so the
-page never shows a broken image. Both states are tested.
-
-Once the real file is in, add `width` and `height` attributes to the `<img>`
-matching its pixel size, so nothing shifts as it loads.
+`assets/jadon-photo.jpg`, shown in section 07. The source was a 1.8 MB PNG;
+it ships as an optimised 1100px JPEG at 89 KB, with `width` and `height` set so
+nothing shifts while it loads. The design's grayscale treatment was removed on
+request, so it renders in colour.
 
 ### 4. Sitemap line
 
@@ -118,10 +126,11 @@ Headless Chrome with real device emulation:
 - **Layout** at 320, 390, 768, 1024, 1280 and 1440 px. No horizontal overflow at
   any width, no stranded card in the four-up grids.
 - **CTAs** - all five in-page anchors resolve to a real target.
-- **Form** - empty submit blocked; configured endpoint shows the success panel
-  and moves focus to it; endpoint error re-enables the button and offers the
-  email fallback; honeypot silently discards bots.
-- **Photo** - tested with the file present and absent.
+- **Form** - seven cases: empty submit blocked, the no-JS path's action and
+  access key, success panel and focus, network failure recovery, Web3Forms
+  answering `success: false`, honeypot, and a live end-to-end submission
+  against the real API.
+- **Photo** - loads at 1100px, renders at 520px, no filter applied.
 - **Accessibility** - labels, heading order (H1 to H2 to H3, no skips),
   landmarks, alt text, focus rings, skip link, `prefers-reduced-motion`.
 
@@ -130,7 +139,8 @@ Headless Chrome with real device emulation:
 - One HTML file, all CSS inline. One render-blocking request.
 - Archivo loads from Google Fonts asynchronously with `display=swap` and a
   `<noscript>` fallback, so text paints immediately in the system fallback.
-- No JavaScript libraries. About 40 KB, roughly 11 KB gzipped.
+- No JavaScript libraries. Page weight is about 99 KB: 9 KB of gzipped
+  HTML plus the 89 KB photo.
 
 ## Local preview
 
