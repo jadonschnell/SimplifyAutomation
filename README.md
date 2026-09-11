@@ -14,11 +14,9 @@ assets/       jadon-photo.jpg, the headshot
 ## Positioning
 
 Written for **any local business owner losing hours to repeat work** - trades,
-shops, offices, nonprofits. Restoration appears exactly once, low on the page in
-the "Who I am" section, as experience rather than a gate:
-
-> I work mostly with home service and restoration companies. But if you are a
-> local business owner losing hours to repeat work, come talk to me.
+shops, offices, nonprofits. No industry is named anywhere on the page. The one
+specificity line that used to sit in "Who I am" was removed on request, so
+nothing signals that some businesses are a better fit than others.
 
 Rules the copy follows, so later edits stay consistent:
 
@@ -48,7 +46,7 @@ tied to the access key. Nothing left to configure.
 var CONFIG = {
   formEndpoint: "https://api.web3forms.com/submit",
   accessKey: "beb63cd3-a461-4859-85d5-216a87a10549",
-  contactEmail: ""
+  contactEmail: "jadonschnell@gmail.com"
 };
 ```
 
@@ -62,10 +60,10 @@ Three layers, so a lead is hard to lose:
 2. **Without JavaScript** the form's own `action` and `method` post straight to
    Web3Forms, which shows its default thank-you page. The browser validates the
    required fields natively, since the form carries no `novalidate`.
-3. **If the request fails** the button re-enables and an error appears. Setting
-   `contactEmail` turns that error into a `mailto:` link pre-filled with the
-   lead's details; left empty it is a plain retry message. An address there is
-   visible in the page source and will be scraped, so it is opt-in.
+3. **If the request fails** the button re-enables and the error offers a
+   `mailto:` link to `jadonschnell@gmail.com`, pre-filled with the lead's name,
+   company and phone. That address is visible in the page source and will be
+   picked up by scrapers; swap it for a role address if that becomes a problem.
 
 Two honeypots catch bots: a hidden text field, and Web3Forms' own `botcheck`.
 Both are inside an `aria-hidden` container with `tabindex="-1"`, so neither is
@@ -110,6 +108,7 @@ These are load bearing and each appears in more than one place:
   on what we find and gets quoted after the audit.
 - **No named clients, no logo wall, no testimonials.** Section 06 is about what
   you look for and what you build, not who you have done it for.
+- **No industry is named.** The page reads as open to any local business owner.
 - **"Most owners get back 10 or more hours in the first month"** and **"most are
   running in under two weeks"** are the two numeric claims. Make sure you can
   stand behind both.

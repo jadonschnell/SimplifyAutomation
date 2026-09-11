@@ -661,7 +661,6 @@ strong { font-weight: 800; }
         </div>
         <p class="about-lede">I am Jadon. I build systems for local business owners, one owner at a time, nationwide, from Colorado.</p>
         <p>I'm not a software company and I'm not an agency. There's no team behind me and no offshore support desk. You talk to me, and I do the work.</p>
-        <p>I work mostly with home service and restoration companies. But if you are a local business owner losing hours to repeat work, come talk to me.</p>
       </div>
       <div class="frame">
         <img src="assets/jadon-photo.jpg" width="1100" height="1100"
@@ -780,11 +779,11 @@ var CONFIG = {
   formEndpoint: "https://api.web3forms.com/submit",
   accessKey: "beb63cd3-a461-4859-85d5-216a87a10549",
 
-  // Optional. If set, a failed submission offers a mailto link pre-filled with
-  // the lead's details, so nothing is lost when the endpoint is unreachable.
-  // Leave empty to show a plain retry message instead. Note that an address
-  // here is visible in the page source and will be picked up by scrapers.
-  contactEmail: ""
+  // Fallback only. Web3Forms already delivers to the inbox tied to the access
+  // key above; this address is used if that request fails, to offer a mailto
+  // link pre-filled with the lead's details so nothing is lost. It is visible
+  // in the page source.
+  contactEmail: "jadonschnell@gmail.com"
 };
 
 (function () {
